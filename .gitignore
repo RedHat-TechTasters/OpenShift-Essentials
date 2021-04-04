@@ -1,0 +1,3 @@
+docs/*
+!docs/lab-style.css
+!docs/index.html
