@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<title>Introduction</title>
+<style>
+
+</style>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<p>Author: Ian Lawson (feedback to <a href="mailto:ian.lawson@redhat.com">ian.lawson@redhat.com</a>)</p>
+</div>
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p>This chapter will introduce the attendee to the mechanics of creating and manipulating Applications using OpenShift Container Platform. It will introduce the two distinct contexts of the User Interface, the Administrator and Developer views, and guide the attendee through creating some Applications.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The attendee will be using a browser for interacting with both the OpenShift Container Platform UI and the terminal application created in the pre-requisites step (for command line exercises). It is strongly suggested the attendee uses Chrome or Firefox.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_starting_up_logging_on_and_creating_a_project">Starting up - logging on and creating a project</h3>
+<div class="paragraph">
+<p>Log on to cluster at {{OPENSHIFT_CONSOLE_URL}}[{{OPENSHIFT_CONSOLE_URL}}, window="_blank"] as '{{USER_ID}}', password 'openshift'.</p>
+</div>
+<div class="paragraph">
+<p>Switch to the Administrator View - at the top left of the UI is a selection box which describes the current view selected.</p>
+</div>
+<div class="paragraph">
+<p><strong>The Administrator view provides you with an extended functionality interface that allows you to deep dive into the objects available to your user. The Developer view is an opinionated interface designed to ease the use of the system for developers. This workshop will have you swapping between the contexts for different tasks.</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on 'Create Project'</p>
+</div>
+<div class="paragraph">
+<p>Name - ‘sandbox-{{USER_ID}}’</p>
+</div>
+<div class="paragraph">
+<p>The Display Name and Description components are cosmetic labels and can be left empty. Hit 'Create'</p>
+</div>
+<div class="paragraph">
+<p>When the project completes creation click on the User Management tab on the left of the interface and select 'Role Bindings'</p>
+</div>
+<div class="paragraph">
+<p><strong>By default when you create a Project within OpenShift your user is given administration rights. This allows the user
+to create any objects that they have rights to create and to change the security and access settings for the project
+itself, i.e. add users as Administrators, Edit Access, Read access or disable other user&#8217;s abilities to even see
+the project and the objects within.</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_your_first_application">Creating your first Application</h3>
+<div class="paragraph">
+<p>In the top left of the UI, where the label indicates the view mode, change the mode from Administrator to Developer</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-2.png" alt="Developer Context">
+</div>
+</div>
+<div class="paragraph">
+<p>Click 'Add'</p>
+</div>
+<div class="paragraph">
+<p><strong>The Catalog screen for the developer combines all the ways components can be added into the Project. These are:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Quick Starts - these are simple quick start applications of various types for reference</strong></p>
+</li>
+<li>
+<p>*Samples - these are OpenShift provided applications from code samples</p>
+</li>
+<li>
+<p><strong>From Git - this provides another way to do a Source-2-Image build by first choosing the Git repo and then the builder image to use</strong></p>
+</li>
+<li>
+<p><strong>Container Image - this provides a way to directly deploy an Image from a repository</strong></p>
+</li>
+<li>
+<p><strong>From Dockerfile - this allows the Developer to do a controlled build of an Image from a Dockerfile</strong></p>
+</li>
+<li>
+<p><strong>YAML - this allows the Developer to provide a set of populated YAML to define the objects to be added to the Project</strong></p>
+</li>
+<li>
+<p><strong>From Catalog - this allows the Developer to browse all available templates, which are predefined sets of Objects to create an application</strong></p>
+</li>
+<li>
+<p><strong>Database - this allows the Developer to browse pre-created Database services to add to the Project</strong></p>
+</li>
+<li>
+<p><strong>Operator Backed - this allows the developer to deploy an Application that is backed by an Operator, i.e. using a CR to deploy an application</strong></p>
+</li>
+<li>
+<p><strong>Helm Charts - this allows the developer to add something to the project from a Helm chart, which defines the base state of a set of Kubernetes objects</strong></p>
+</li>
+<li>
+<p><strong>Pipeline - this allows the developer to instantly add a Tekton based pipeline for automated delivery of an application</strong></p>
+</li>
+<li>
+<p><strong>Event Source - this allows the developer to register a subscription to aclass of events from a given system</strong></p>
+</li>
+<li>
+<p>*Channel - this allows a developer to create a Knative channel for Knative event driven behaviours</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Select ‘From Catalog’</p>
+</div>
+<div class="paragraph">
+<p>Untick the filter that says 'Operator Backed'. This filter allows the developer to see a reduced set of the available options</p>
+</div>
+<div class="paragraph">
+<p>Enter ‘node’ in the 'filter by keyword' search box</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-1.png" alt="Node Choice">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>OpenShift allows for multiple base images to be built upon - the selection of node searches for any images or templates registered into the system
+with the label 'node'. In the screenshot above, and in the catalog you will be presented with, there will be a selection of base images.</strong></p>
+</div>
+<div class="paragraph">
+<p>Select ‘Node.js’ (Builder Image)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-3.png" alt="Node Choice">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>When you select an option, in this case the Node.js builder one, you are presented with a wizard that shows you exactly what
+components will be created as part of your Project. In this case, with Node.js, the template will create a build config, that will build the
+Image that will contain your Application, an ImageStream which is the OpenShift representation of an Image, a deployment config, which defines exactly how the image
+will be deployed as a running Container within the Project, a service which is the internal endpoint for the application within the Project and a route,
+optionally, which will provide access to the Application for external consumers.</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on 'Create Application'</p>
+</div>
+<div class="paragraph">
+<p><strong>This approach uses the OpenShift ''source-2-image'' concept, which is a controlled mechanism provided by OpenShift that automates the creation
+of application images using a base image and a source repository.</strong></p>
+</div>
+<div class="paragraph">
+<p>Leave the builder image at 12-ubi7</p>
+</div>
+<div class="paragraph">
+<p><strong>The ''source-2-image'' approach allows you to use differing versions of a base image - in this case you can execute the Node build against a number of supported Node
+versions.</strong></p>
+</div>
+<div class="paragraph">
+<p>Enter the following for the Git repo for the application - <a href="https://github.com/utherp0/nodenews" target="_blank" rel="noopener">https://github.com/utherp0/nodenews</a></p>
+</div>
+<div class="paragraph">
+<p>Once you remove focus from the git repo text entry point ensure the git repo is correct; a label will appear below the text box saying 'Validated'. If it doesn&#8217;t check the URL is correct.</p>
+</div>
+<div class="paragraph">
+<p>In a separate browser tab go to <a href="https://github.com/utherp0/nodenews" target="_blank" rel="noopener">https://github.com/utherp0/nodenews</a></p>
+</div>
+<div class="paragraph">
+<p><strong>If you visit the URL you will see there is no OpenShift specific code in the repository at all.</strong></p>
+</div>
+<div class="paragraph">
+<p>Close the github tab</p>
+</div>
+<div class="paragraph">
+<p>Back at the OCP4.6 UI scroll down and ensure the Application Name and Name textboxes have been autofilled. These should be set to nodenews-app and nodenews in order</p>
+</div>
+<div class="paragraph">
+<p><strong>OpenShift 4 introduces the concept of Application Grouping. This allows a visualisation of multiple Applications in the same 'group', making visibility of the Application much
+simpler.</strong></p>
+</div>
+<div class="paragraph">
+<p>Scroll down to 'Resources'. Click the selection box for 'Deployment Config' rather than the default of 'Deployment'</p>
+</div>
+<div class="paragraph">
+<p><strong>OpenShift supports the Kubernetes mechanism of 'Deployment' but DeploymentConfigs are more advanced and offer more features for deploying an application, including strategies.</strong></p>
+</div>
+<div class="paragraph">
+<p>Ensure the ‘Create Route is checked’</p>
+</div>
+<div class="paragraph">
+<p>Click 'Create'</p>
+</div>
+<div class="paragraph">
+<p><strong>The Topology view is a new feature of OpenShift 4 that provides a dynamic and useful visualisation of all of your Applications in a given Project.</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on the Icon marked 'Node'</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-4.png" alt="Node Sidepanel">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>The side-panel contains an overview of the Application you chose. In this case it will cover
+the build. Once a build has completed this side panel shows the Pods that are running, the builds that have completed, the services
+exported for the Application and the routes, if the Application has any.</strong></p>
+</div>
+<div class="paragraph">
+<p>Wait for the Build to finish, the Pod to change from Container Creating to Running</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-4b.png" alt="Node Sidepanel with App Running">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>When an Application is created the Pod ring will be empty, indicating that an Application will appear once the build has completed. When the build
+completes the Pod ring will switch to light blue, indicating the Pod is being pulled (the image is being pulled from the registry to the Node where the
+Pod will land) and is starting (the Pod is physically in place but the Containers within it are not reporting as ready). Once the Pod is placed and running the colour
+of the Pod ring will change to dark blue.</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on the Tick at the bottom left of the Pod</p>
+</div>
+<div class="paragraph">
+<p><strong>If you scroll the log of the Build output you will see the steps that the build takes. This includes laying the foundational file layers for the base
+image, performing the code specific build operations (in this case an ''npm install'') and then pushing the file layers for the image into the OpenShift
+integrated registry.</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-4e.png" alt="build output">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_additional_applications">Adding additional Applications</h3>
+<div class="paragraph">
+<p>Click 'Add+'</p>
+</div>
+<div class="paragraph">
+<p>Click 'From Catalog'</p>
+</div>
+<div class="paragraph">
+<p>Search for ‘httpd’</p>
+</div>
+<div class="paragraph">
+<p>Select the Apache HTTP Server (httpd) template - Note that there are two options, you want to choose the one that is labelled (httpd) and starts with the text 'Build and serve static content' and is labelled 'Builder Image'</p>
+</div>
+<div class="paragraph">
+<p>Click on 'Create Application'</p>
+</div>
+<div class="paragraph">
+<p>Leave Image Version as 2.4-el7</p>
+</div>
+<div class="paragraph">
+<p>Enter the following for the Git repo for the application - <a href="https://github.com/utherp0/forumstaticassets" target="_blank" rel="noopener">https://github.com/utherp0/forumstaticassets</a></p>
+</div>
+<div class="paragraph">
+<p>When you unfocus the textbox the word 'Validated' will appear - if this doesn&#8217;t check the URL for correctness</p>
+</div>
+<div class="paragraph">
+<p>Make sure the Application is ‘nodenews-app’</p>
+</div>
+<div class="paragraph">
+<p>Make sure the Name is forumstaticassets</p>
+</div>
+<div class="paragraph">
+<p>In the Resources section leave the Deployment as 'Deployment'</p>
+</div>
+<div class="paragraph">
+<p>Make sure the ‘Create a Route’ checkbox is clicked</p>
+</div>
+<div class="paragraph">
+<p>Click 'Create'</p>
+</div>
+<div class="paragraph">
+<p><strong>Note that the new Application icon appears within a bounded area on the Topology page labelled with the 'Application' chosen above. If you click on the area between the Pods you can move
+the group as a single action.</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on the forumstaticassets Pod</p>
+</div>
+<div class="paragraph">
+<p>Watch the build complete, the Container Creating and the Running event.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-4c.png" alt="Multi-app topology">
+</div>
+</div>
+<div class="paragraph">
+<p>Click 'Add'</p>
+</div>
+<div class="paragraph">
+<p>Click 'From Catalog'</p>
+</div>
+<div class="paragraph">
+<p>Search for ‘node’</p>
+</div>
+<div class="paragraph">
+<p>Select ‘Node.js’ (the Builder Image)</p>
+</div>
+<div class="paragraph">
+<p>Click 'Create Application'</p>
+</div>
+<div class="paragraph">
+<p>Leave at Builder Image Version 12-ubi7</p>
+</div>
+<div class="paragraph">
+<p>Enter the following for the Git repo for the application - <a href="https://github.com/utherp0/ocpnode" target="_blank" rel="noopener">https://github.com/utherp0/ocpnode</a></p>
+</div>
+<div class="paragraph">
+<p>Insure the 'Validated' message appears when you exit the field. Again, if it doesn&#8217;t check the URL.</p>
+</div>
+<div class="paragraph">
+<p>In the ‘Application’ pulldown select ‘Create Application‘</p>
+</div>
+<div class="paragraph">
+<p>In the ‘Application Name’ enter ‘ocpnode-app’</p>
+</div>
+<div class="paragraph">
+<p>Ensure the Name is ‘ocpnode’</p>
+</div>
+<div class="paragraph">
+<p>In 'Resources' set the deployment type to DeploymentConfig</p>
+</div>
+<div class="paragraph">
+<p>Ensure the ‘Create Route’ is checked</p>
+</div>
+<div class="paragraph">
+<p>Click 'Create'</p>
+</div>
+<div class="paragraph">
+<p>Click on the ‘ocpnode’ Application in the topology - click on the <span class="image"><img src="expand-arrows.png" alt="cross"></span> icon (if you hang over it it will say 'Fit To Screen') situated at the bottom left of the Topology panel to centralise the topology</p>
+</div>
+<div class="paragraph">
+<p><strong>Now we have created a new Application grouping you will see two ''cloud'' groupings, labelled with the appropriate Application name you entered.</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-4d.png" alt="Multi-app topology">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interacting_with_openshift_through_the_command_line">Interacting with OpenShift through the Command Line</h3>
+<div class="paragraph">
+<p>With the OpenShift Enterprise command line interface (CLI), you can create applications and manage OpenShift projects from a terminal.
+The CLI is ideal in situations where you are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Working directly with project source code.</p>
+</li>
+<li>
+<p>Scripting OpenShift Enterprise operations.</p>
+</li>
+<li>
+<p>Restricted by bandwidth resources and cannot use the web console.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As part of the pre-requisites for the workshop we created and started a terminal app. Go to that tab now (if you have closed it go back to the pre-reqs and follow the instructions for opening it).</p>
+</div>
+<div class="paragraph">
+<p>Make sure <code>oc</code> is working, type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc whoami
+oc version</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Also see the <strong>Command-Line Reference</strong>: <a href="https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html" target="_blank" rel="noopener">https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To explore the command line further execute the following commands and observe the results.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc projects
+oc project sandbox-{{USER_ID}}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>User should now be using the sandboxX project created and configured earlier</p>
+</div>
+<div class="paragraph">
+<p>Next we will try a command that will fail because of OpenShift&#8217;s security controls</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc get users</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>There is a level of permission within the OpenShift system called ''Cluster Admin''. This permission allows a User to access any of the objects on the
+system regardless of Project. It is effectively a super-user and as such normal users do not normally have this level of access.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc get pods</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>If you look carefully at the Pods shown you will notice there are additional Pods above and beyond the ones expected for your Applications. If you look at the state of
+these Pods they will be marked as Completed. Everything in OpenShift is executed as a Pod, including Builds. These completed Pods are the Builds we have run so far.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc get pods | grep Completed</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc get pods | grep Running</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc get dc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>DC is an abbreviation for Deployment Config. These are Objects that directly define how an Application is deployed within OpenShift. This is the ''ops''
+side of the OpenShift system. Deployment Configs are different to Kubernetes Deployments in that they are an extension and contain things such as Config Maps, Secrets,
+Volume Mounts, labelled targetting of Nodes and the like.</strong></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Note that when you do the 'oc get dc' you get two deployments listed. Remember that we chose the Kubernetes deployment option for the httpd app.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Enter the command below to tell OpenShift to scale the number of instances of the Deployment Config 'nodenews' to two rather than the default one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc scale dc/nodenews --replicas=2</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_summary_of_application_interactions">A Summary of Application Interactions</h3>
+<div class="paragraph">
+<p>Go back to the UI and make sure you are on Developer mode. Click on Topology.</p>
+</div>
+<div class="paragraph">
+<p>Click on the ‘nodenews’ application</p>
+</div>
+<div class="paragraph">
+<p>Note the ‘DC’ reference to the application under the icon</p>
+</div>
+<div class="paragraph">
+<p>In the pop-up panel on the right click on 'Resources' if it is not already showing</p>
+</div>
+<div class="paragraph">
+<p>Note that there are two pods running with the application now</p>
+</div>
+<div class="paragraph">
+<p>Change the mode from Developer to Administrator</p>
+</div>
+<div class="paragraph">
+<p>Select the 'sandbox-{{USER_ID}}' project in the project list</p>
+</div>
+<div class="paragraph">
+<p>Note the metrics for the project</p>
+</div>
+<div class="paragraph">
+<p>Click on 'Workloads' on the left menu (not the project overview) and then select Pods to see the list of pods for the project as shown in the image below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-7.png" alt="Command Line Tools">
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to filter groups of pods that are displayed based on the headings of Running, Pending, Terminating etc. The classifications in dark blue are currently being displayed and those in grey are not being displayed. Click on the 'Completed' heading to switch on the display of completed pods (there should be five). Click on 'Running' to toggle the display of running pods off. Click on the appropriate headings again to switch off the display of completed pods and to switch back on the display of running pods.</p>
+</div>
+<div class="paragraph">
+<p><strong>Note that all the builds and deployments you have done, for the deployments that have a DeploymentConfig, have completed Pods. All of the actions are executed in separate Pods which is one of the key features that makes OpenShift so scalable</strong></p>
+</div>
+<div class="paragraph">
+<p>Change to Developer mode and then select Topology if the Topology page isn’t already shown</p>
+</div>
+<div class="paragraph">
+<p>Hold down the shift button, click and hold on the forumstaticassets icon, and pull it out of the application grouping graphic. Release the hold on the forumstaticassets icon.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="applicationbasics-8.png" alt="Moving app from group">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>The UI will now prompt you if you wish to remove the application component. Select Remove. This component is now separated from the application group</strong></p>
+</div>
+<div class="paragraph">
+<p>Now hold down the shift button again, click and hold on the free floating forumstaticassets icon, and drag back over the boundary displayed for the nodenews-app application group. Release the hold and the application should be re-grouped.</p>
+</div>
+<div class="paragraph">
+<p>Continue on with the Deployments chapter, which uses the applications created here to show the capabilities of the deployment configuration and how to alter the behaviour and file system of a Container without changing the image.</p>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2021-04-04 14:55:40 UTC
+</div>
+</div>
+</body>
+</html>
