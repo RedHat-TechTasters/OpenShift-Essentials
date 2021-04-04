@@ -1,94 +1,68 @@
-body {
-	font-family: sans-serif;
-	line-height: 1.5;
-	padding: 0;
-	margin: 0;
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(//fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#F44336; /* Red 500 */
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#B71C1C; /* Red 900 */
+--linkcolor:#EF9A9A; /* Red 200 */
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
 }
 
-.article {
-	display: grid;
-	grid-template-areas: "nav content";
-	grid-template-columns: 20em 1fr;
-	grid-template-rows: auto;
-}
+body{font-family: "Noto Sans",sans-serif;}
+
+#header{background-color:var(--primarycolor); padding:25px;max-width: none;}
+#footer{background-color: var(--sidebarbackground);}
+h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
+h4,h5,h6{color:var(--primarycolor);}
+.title{color:var(--sidebarbackground) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:white;}
 
 a {
-	text-decoration: none;
+  text-decoration: none;
+  color: var(--linkcolor);
+}
+a:hover {
+  color: var(--sidebarbackground);
+}
+.quoteblock blockquote::before {
+  color: var(--linkcolor);
+}
+mark {
+  color: var(--white);
+  background-color: var(--linkcolor);
 }
 
-#header {
-	background-color: #444;
-	grid-area: nav;
+/* Card styling */
+.sect1{border-bottom:1px solid grey;border-radius:8px;}
+
+/* Table styles */
+th{background-color: var(--linkcolor);color:#FFFFFF;}
+
+#toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
+#toc.toc2.a{color:var(--white);}
+#toc.toc2.a:active{color:var(--white) !important;}
+#toc.toc2.a:visited{color:var(--white) !important;}
+#toctitle{color:white;font-size: 16px;}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
 }
 
-#toc {
-	padding: 1em;
-}
-
-#toc a {
-	color: white;
-}
-
-#toc li {
-	padding-bottom: .6em;
-}
-
-#toc ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#toc ul ul {
-	padding-left: 1.4em;
-}
-
-#toctitle {
-	font-weight: bold;
-	color: white;
-}
-
-h1 {
-	font-size: 1.4em;
-	background-color: black;
-	padding: .6em;
-	margin: 0;
-	color: white;
-}
-
-#toc a:hover {
-	background-color: maroon;
-}
-
-#content {
-	background-color: white;
-	grid-area: content;
-	max-width: 1000px;
-	padding: 1em;
-	margin: auto;
-}
-
-#content img {
-	max-width: 100%;
-}
-
-pre {
-	background-color: #f7f7f8;
-	padding: 1em;
-	word-wrap: break-word;
-	white-space: pre-wrap;
-}
-
+@media all and (max-width: 600px) {
 table {
-	border-collapse: collapse;
+  width: 55vw!important;
+  font-size: 3vw;
 }
-
-td, th {
-	border: 1px solid gray;
-	padding: .4em;
-}
-
-th {
-	background-color: #f9f9f9;
-	text-align: left;
 }
