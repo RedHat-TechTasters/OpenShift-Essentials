@@ -66,3 +66,11 @@ table {
   font-size: 3vw;
 }
 }
+
+#header, #content, #footnotes, #footer {
+  margin-left: 0px;
+}
+
+#header {
+  display: none;
+}
