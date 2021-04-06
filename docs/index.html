@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
@@ -15,6 +16,13 @@
       overflow: hidden;
     }
     
+    h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
+    h1{font-size:30px;}
+    h2{font-size:25px;}
+    h3{font-size:20px;}
+    h4{font-size:20px;}
+
+
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -55,11 +63,11 @@
     }
     .col-sm-3 {
       padding-top: 0px;
-      width: 20%;
+      width: 18%;
     }
     .col-sm-9 {
-      height: 100%;
-      width: 80%;
+      height: 95%;
+      width: 82%;
     }
 
     /* On small screens, set height to 'auto' for sidenav and grid */
@@ -132,15 +140,14 @@
         <h4><b>OpenShift Essentials</b></h4>
       </div>
       
-      <ul class="nav nav-pills nav-stacked">
-        <li id="introduction_to_oc"><a  href="#">Introduction to 'oc'</a></li>
-        <li id="application_basics"><a  href="#">Application Basics</a></li>
+      <ul id="labs_menu" class="nav nav-pills nav-stacked">
+        
       </ul><br>
     </div>
 
     <div class="col-sm-9">
       <!-- <iframe src="applicationbasics.html" title="Application Basics" style="position:fixed; width:86%; height:100%; border:none; margin:0; padding:0;  z-index:999999;"></iframe> -->
-      <iframe id="lab_frame" src="applicationbasics.html" title="Application Basics" style="width:100%; height:100%; border:none; margin:0; padding:0; z-index:999999;"></iframe>
+      <iframe id="lab_frame" src="" title="Application Basics" style="width:100%; height:100%; border:none; margin:0; padding:0; z-index:999999;"></iframe>
     </div>
   </div>
 </div>
@@ -150,6 +157,7 @@
 </body>
 
 <script>
+
   var current_lab = "none";
   function selectLab(lab) {
     $('#lab_frame').attr("src", lab+".html");
@@ -157,10 +165,28 @@
     $('#'+current_lab).removeClass('active');
     current_lab = lab;
   }
-  $('#introduction_to_oc').click(function(){ selectLab("introduction_to_oc"); return false; });
-  $('#application_basics').click(function(){ selectLab("application_basics"); return false; });
 
-  selectLab("introduction_to_oc")
+  var manifest = {}
+  $.getJSON('manifest.json', function(data) {
+    for (var key in data) {
+      var lab_entry = $("<li>", {
+        id: key,
+        onclick: 'javascript:selectLab("'+key+'")'
+      }).append(
+          $("<a>", {
+          href: '#',
+          html: data[key]
+        })
+      )
+      $("#labs_menu").append(
+        lab_entry
+      )
+      
+    }
+    selectLab(Object.keys(data)[0])
+  });
+
+  
 
 </script>
 

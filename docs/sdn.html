@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<title>Introduction</title>
+<link rel="stylesheet" href="./lab-style.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p>This chapter provides a developer-centric view of the fundamentals and capabilities of the SDN (Software Defined Network) that is used within OpenShift for Application connectivity.</p>
+</div>
+<div class="paragraph">
+<p>If you are not already logged on go to the UI URL at {{OPENSHIFT_CONSOLE_URL}}[{{OPENSHIFT_CONSOLE_URL}}, window="_blank"] and logon as '{{USER_ID}}' and password openshift.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_basics_of_service_addressing">The basics of Service Addressing</h3>
+<div class="paragraph">
+<p><strong>In this section we will create a couple of simple applications and show how they are represented via the Service objects and load-balancing of Pods within the SDN itself.</strong></p>
+</div>
+<div class="paragraph">
+<p>If you do not already have a terminal tab running as defined in the pre-requisites please open one following the instructions in the pre-requisites</p>
+</div>
+<div class="paragraph">
+<p>Ensure you are on the Administrator View (top level, select Administrator)</p>
+</div>
+<div class="paragraph">
+<p>Select Home/Projects</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘Create Project’</strong></p>
+</div>
+<div class="paragraph">
+<p>For the project name give it networktest-{{USER_ID}}</p>
+</div>
+<div class="paragraph">
+<p>Display Name and Description are optional</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Create'</strong></p>
+</div>
+<div class="paragraph">
+<p>Using the top left selection switch the UI from Administrator to Developer</p>
+</div>
+<div class="paragraph">
+<p>In the Topology Tab click on ‘From Catalog’</p>
+</div>
+<div class="paragraph">
+<p>In the search box enter ‘node’. Select the Node.js option (Builder Image)</p>
+</div>
+<div class="paragraph">
+<p><strong>Click ‘Create Application’</strong></p>
+</div>
+<div class="paragraph">
+<p>For the git repo enter <strong><a href="https://github.com/utherp0/nodenews" class="bare">https://github.com/utherp0/nodenews</a></strong> - insure the UI indicates 'Validated' when you complete the text</p>
+</div>
+<div class="paragraph">
+<p>Set the 'Application Name' to ‘application1-app’</p>
+</div>
+<div class="paragraph">
+<p>Set the 'Name' to 'application1'</p>
+</div>
+<div class="paragraph">
+<p>In Resources set the deployment type to DeploymentConfig</p>
+</div>
+<div class="paragraph">
+<p><strong>Click 'Create'</strong></p>
+</div>
+<div class="paragraph">
+<p>At this point the first application will start to build and deploy - we are now going to add a second one</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘+Add’</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘From Catalog’</strong></p>
+</div>
+<div class="paragraph">
+<p>In the search box enter ‘node’. Again select the Node.js option (Builder Image)</p>
+</div>
+<div class="paragraph">
+<p><strong>Click ‘Create Application’</strong></p>
+</div>
+<div class="paragraph">
+<p>For the git repo enter ‘https://github.com/utherp0/nodenews’</p>
+</div>
+<div class="paragraph">
+<p>Choose 'Create Application' from the Application pulldown</p>
+</div>
+<div class="paragraph">
+<p>Set the 'Application Name' to 'application2-app'</p>
+</div>
+<div class="paragraph">
+<p>Set the Name to ‘application2’</p>
+</div>
+<div class="paragraph">
+<p>In Resources set the deployment type to DeploymentConfig</p>
+</div>
+<div class="paragraph">
+<p><strong>Click 'Create'</strong></p>
+</div>
+<div class="paragraph">
+<p>Wait until both applications have built and deployed. The Topology view will look similar to the image below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-1.png" alt="Both Applications Loaded">
+</div>
+</div>
+<div class="paragraph">
+<p>Once the applications have created change the mode from Developer to Administrator using the top left selection point</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Projects'. Select the networktest-{{USER_ID}} project</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Networking/Services'</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-2.png" alt="Example Services">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The Services UI shows the services currently available in the Project. Note that there is a Service per application, so in this case there are two Services, application1 and application2. The Location is a singular IP address for each Service within the SDN - more on this later.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Workloads/Deployment Configs'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the application1 dc</strong></p>
+</div>
+<div class="paragraph">
+<p>Using the arrows next to the Pod indicator scale the application to three replicas</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘Pods’ in the DC view (not Workloads/Pods)</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-3.png" alt="Pod Listing">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Click on the first active Pod for application1 listed</strong></p>
+</div>
+<div class="paragraph">
+<p>Scroll down and take a note of the IP address for the Pod</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-4.png" alt="Highlighted Pod IP">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Navigate to 'Networking/Services'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the application1 service</strong></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Note that the Cluster IP address for the Service has NOT changed. Scaling the Application has no impact on the singular IP address for the Service, which in actuality acts as a load-balancer across ALL of the IP addresses for the Pods of that Application.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_shorthand_service_name_directly">Using the shorthand Service name directly</h3>
+<div class="paragraph">
+<p><strong>Navigate to 'Workloads/Pods'</strong></p>
+</div>
+<div class="paragraph">
+<p>Set the filter to 'Running' for ease of view</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-4b.png" alt="filtered pods">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Click on the first running Pod for application1 (the name will be application1-1-(something)</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on Terminal</strong></p>
+</div>
+<div class="paragraph">
+<p>In the Terminal window type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://localhost:8080</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+You will see the webpage for the Application as a return from the curl statement. The Container sees itself as localhost. Also note that because we are calling from within the Container we use the port address - if you were using the Routes their would be a Route for every Service, with no port address.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the Terminal window type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://application1:8080</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+This is where it starts to get interesting. The Service 'name' itself is exported into the network namespace of the Container so it can refer to it as a short name. The SDN translates the service name into the service IP - in reality this Container could be getting a webpage back from any of the Application Pods that satisfy this Service.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_fully_qualified_domain_name_for_accessing_services">Using the Fully Qualified Domain Name for accessing Services</h3>
+<div class="paragraph">
+<p>In the Terminal window type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://application1.networktest-{{USER_ID}}.svc.cluster.local:8080</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+And this is the fully qualified version of the Service. by including the namespace/project name we can reach, effectively, any service on the SDN assuming the SDN has been configured to allow that. In this case we are just targeting our own Service from the application Container, now we will try the other application in the namespace.*
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the Terminal window hit the up arrow to get the last command, edit the name and change application1 to application2, hit return at the end of the statement</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+You should get the contents of a webpage. This is the output of the other application. This long format makes it easy to refer to other applications without having to leave and come back into the SDN (via a Route).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the terminal type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://application2:8080</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>We can also connect to any of the Services hosted within the namespace/project by default</strong></p>
+</div>
+<div class="paragraph">
+<p>If you are working with others ask someone who is also on this lab to provide you their project name, i.e. networktest-user99 - if you are working by yourself skip this test and take our word for it&#8230;&#8203;.</p>
+</div>
+<div class="paragraph">
+<p>In the terminal type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://application1.(the project name from the person next to you).svc.cluster.local:8080</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+OpenShift Container Platform can be installed with two different modes of SDN. The first is subnet, which exposes all Services in all Namespace/Projects to each other. This instance has a subnet SDN which is why you should be able to call other peoples Services directly from your own via the internal FQDN address.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controlling_access_through_network_policies">Controlling Access through Network Policies</h3>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Network Policies</div>
+<div class="paragraph">
+<p>OpenShift actually provides three distinct levels of information when it comes to logging:Historically OpenShift had two ways of setting up the SDN it used, the first being 'subnet', which made the SDN flat and every namespace/project visible by default to every other one, and 'Multitenant' which isolated every namespace with its own network ID. This was deemed to be too coarse a control, so the concept of 'Network Policies' was created. This allows for rules to be applied to any object within a namespace in terms of ingress and exgress.</p>
+</div>
+<div class="paragraph">
+<p>By default when you create a project it is assigned some default policies that mirror the behaviour of the 'Multitenant' configuration, isolating the namespace. In this section we will remove those defaults and create some others to show the capabilities.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Navigate to 'Network/Network Policies'</strong></p>
+</div>
+<div class="paragraph">
+<p>For each of the policies listed click on the triple dot icon on the far right and choose ‘Delete Network Policy’.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="sdn-5.png" alt="Delete Network Policies">
+</div>
+</div>
+<div class="paragraph">
+<p>The Network Policy tab should display ‘No Network Policies Found’.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to Workloads/Pods, click on one of the application1 Pods, choose Terminal</p>
+</div>
+<div class="paragraph">
+<p>Repeat the ‘curl’ command listed above for the person sat next to you, i.e. curl their application1 (again, if there is no one ask the course administrator to create a networktest project you can reference)</p>
+</div>
+<div class="paragraph">
+<p>Ensure you get a webpage</p>
+</div>
+<div class="paragraph">
+<p>Go to Networking/Network Policies</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘Create Network Policy’</strong></p>
+</div>
+<div class="paragraph">
+<p>Delete the contents of the YAML editor and replace it with the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: example
+ namespace: networktest-{{USER_ID}}
+spec:
+ podSelector:
+   matchLabels:
+     app: application1
+ ingress: []</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Click ‘Create’</strong></p>
+</div>
+<div class="paragraph">
+<p>Wait until the person next to you has done the same</p>
+</div>
+<div class="paragraph">
+<p><strong>Navigate to 'Workloads/Pods', click on one of the application1 Pods, choose Terminal</strong></p>
+</div>
+<div class="paragraph">
+<p>Repeat the ‘curl’ command listed above for the person sat next to you, i.e. curl their application1</p>
+</div>
+<div class="paragraph">
+<p>The call will eventually fail - feel free to hit Ctrl-C to interrupt</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The creation of a Network Policy that prohibits ingress to the Application Service has stopped access to the Service from external namespaces AND internal Services.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Navigate to 'Workloads/Pods'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the active pod for application2</strong></p>
+</div>
+<div class="paragraph">
+<p>Click on Terminal</p>
+</div>
+<div class="paragraph">
+<p>Type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>curl http://application1:8080</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The call will eventually fail</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+This shows that the Service is prohibited even from Services in its own namespace/project. This application of Network Policy allows for fine-grain control of traffic egress/ingress at the Service level. The other installation mode for SDN for OpenShift 4 is with Network Policies enabled, with default Network Policies providing a fully multitenanted environment.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_clean_up">Clean-Up</h3>
+<div class="paragraph">
+<p>On the triple dot icon on the far right for networktest-{{USER_ID}} select ‘Delete Project’</p>
+</div>
+<div class="paragraph">
+<p>In the pop-up enter the name of the project (‘networktest-{{USER_ID}}’) and hit Delete</p>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2021-04-06 19:08:41 UTC
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+    "intro": "Introduction",
+    "prereq": "Workshop Pre-requisites",
+    "introduction-to-oc": "Introduction to 'oc'",
+    "application-basics": "Application Basics",
+    "deployments": "Deployments and Configuration",
+    "deployment-strategies": "Deployment Configurations and DevOps Approaches",
+    "sdn": "Software Defined Network",
+    "rbac": "RBAC model for Developers",
+    "pvs": "Persistent Volumes",
+    "healthprobes": "Pod Health Probes",
+    "metrics": "Metrics and Logging"    
+}

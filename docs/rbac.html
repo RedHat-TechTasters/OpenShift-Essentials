@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<title>Introduction</title>
+<link rel="stylesheet" href="./lab-style.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p><strong>This chapter will introduce the attendee to the concepts around the Role Based Access Control model integrated into OpenShift. This will cover the use of Users, Service Accounts and Permissions.</strong></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For the majority of this chapter the attendee will need to pair up with another. If the numbers are odd the presenter should fill the gap of the missing attendee - pair the attendees up before the chapter starts and get them to exchange numbers - your partner&#8217;s username, and enter this whererever it says (PARTNERUSERNAME) below.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you are not already logged on go to the UI URL {{OPENSHIFT_CONSOLE_URL}}[{{OPENSHIFT_CONSOLE_URL}}, window="_blank"] and logon as '{{USER_ID}}' and password openshift.</p>
+</div>
+<div class="paragraph">
+<p>If you do not already have a terminal tab running as defined in the pre-requisites please open one following the instructions in the pre-requisites</p>
+</div>
+<div class="paragraph">
+<p>Ensure you are on the Administrator View (top level, select Administrator)</p>
+</div>
+<div class="paragraph">
+<p><strong>In the UI click on 'Home/Projects'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Create Project'</strong></p>
+</div>
+<div class="paragraph">
+<p>For the project name give it 'rbactest-{{USER_ID}}'</p>
+</div>
+<div class="paragraph">
+<p>Display Name and Description are optional.</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Create'</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_examining_service_accounts">Examining Service Accounts</h3>
+<div class="paragraph">
+<p>Once the project has been created, use the sidebar menu to navigate to 'User Management/Service Accounts'.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="rbac-1.png" alt="List of Service Accounts">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Service Accounts are effectively virtual users - even though you have logged on when you do anything within the namespace, such as a build or a deployment, the namespace uses a virtual user, with appropriate permissions, to do the actual tasks internally, like pushing a built image to the registry, or pulling an image to start a Container.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Each project gets a Service Account by default, named default or to give it its full name system:serviceaccount:rbactestx:default (where x is your number). There are also Service Accounts for doing the appropriate actions, such as Builder and Deployer</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>In addition further Service Accounts can be created by the project owner and given additional security details and roles, such as being able to execute Containers as root, or giving Containers specific controlled sec-comp profiles (like changing the Group ID for the process)</strong></p>
+</div>
+<div class="paragraph">
+<p>Switch to the Developer view by clicking on 'Administrator' in the top-left.</p>
+</div>
+<div class="paragraph">
+<p><strong>In the Topology Tab click on ‘From Catalog’</strong></p>
+</div>
+<div class="paragraph">
+<p>In the search box enter ‘node’. Select the Node.js option (Builder Image)</p>
+</div>
+<div class="paragraph">
+<p><strong>Click ‘Create Application’</strong></p>
+</div>
+<div class="paragraph">
+<p>For the git repo enter ‘https://github.com/utherp0/nodenews’</p>
+</div>
+<div class="paragraph">
+<p>Insure the UI displays 'Validated' beneath the URL textbox when you complete typing it in. If it doesn&#8217;t check the URL</p>
+</div>
+<div class="paragraph">
+<p>Set the Application Name to ‘rbac’</p>
+</div>
+<div class="paragraph">
+<p>Set the Name to ‘rbactest’</p>
+</div>
+<div class="paragraph">
+<p>In Resources set the deployment to DeploymentConfig</p>
+</div>
+<div class="paragraph">
+<p><strong>Click 'Create'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the Node pod indicator so that the informational panel appears</strong></p>
+</div>
+<div class="paragraph">
+<p>Watch the build and ensure it completes</p>
+</div>
+<div class="paragraph">
+<p>Once the build is complete ensure the deployment occurs. The Pod ring will turn dark blue</p>
+</div>
+<div class="paragraph">
+<p>Switch back to the Administrator view by clicking on 'Developer' in the top-left.</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on User Management/Role Bindings</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="rbac-2.png" alt="Admin Role">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Note that we have a number of Role Bindings shown at the moment; we are interested in the 'Admin' RoleBindibg which is for Admin and applies to a kind of 'user' and a subject name of '{{USER_ID}}'. This is the binding of your user to the administration role within the project.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Set the filter for the tab to show only the 'System Role Bindings'</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="rbac-3.png" alt="System Role Bindings">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Note that with the filter for System Role Bindings we can now see the three Service Accounts also created. Deployer is part of the system:deployers binding, builder is part of the system:image-builders binding and the group of users under system:serviceaccounts:rbactest-{{USER_ID}} have the system:image-pullers binding.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Remove the filter by clicking on the cross next to it</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the (CR) 'admin' Role Ref</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>This screen displays ALL the actions, via API, that this role has access to grouped by the API groups. This mapping is what controls what the user can do via the bindings they have.</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adding_role_bindings_to_your_namespaceproject">Adding Role Bindings to your namespace/project</h3>
+<div class="paragraph">
+<p><strong>Click on 'User Management/Role Bindings'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Create Binding'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Set Name to ‘partneraccess’</strong></p>
+</div>
+<div class="paragraph">
+<p>Make sure that the Namespace is ‘rbactest-{{USER_ID}}’. If it is not, select ‘rbactest-{{USER_ID}}’ from the Project dropdown menu in the top left.</p>
+</div>
+<div class="paragraph">
+<p><strong>As a user with the admin role within the namespace/project you can add other users with role bindings within your project.</strong></p>
+</div>
+<div class="paragraph">
+<p>Select ‘admin’ in the Role Name pulldown</p>
+</div>
+<div class="paragraph">
+<p>Ensure ‘User’ is selected in the radiobox for Subject</p>
+</div>
+<div class="paragraph">
+<p>Enter ‘user(PARTNERUSER)’ for the Subject Name</p>
+</div>
+<div class="paragraph">
+<p><strong>What we are doing is adding the user you have chosen to pair with as an admin role binding within your project.</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click 'Create'</strong></p>
+</div>
+<div class="paragraph">
+<p>Lets ensure the partner has done the same with your {{USER_ID}}</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on Home/Projects</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>If the partner user has set the role binding appropriately you will now see two projects - your own and the other person&#8217;s</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the partner’s project (rbactest_(PARTNERUSERNAME) )</strong></p>
+</div>
+<div class="paragraph">
+<p>Change to the Developer view using the top left selection point</p>
+</div>
+<div class="paragraph">
+<p>Ensure you can see the Topology page</p>
+</div>
+<div class="paragraph">
+<p>Change back to the Administrator view using the top left selection point</p>
+</div>
+<div class="paragraph">
+<p>Select 'Workloads/Deployment Configs'</p>
+</div>
+<div class="paragraph">
+<p>Ensure that the ‘rbactest’ DC shown has a Namespace that is the Partner’s project</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the DC rbactest</strong></p>
+</div>
+<div class="paragraph">
+<p>Using the arrows scale the deployment to 4 pods</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Home/Projects' and select your project (rbactest-{{USER_ID}})</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on ‘Role Bindings’ in the project overview pane</strong></p>
+</div>
+<div class="paragraph">
+<p>On the triple dot for ‘partneraccess’ choose ‘Delete’</p>
+</div>
+<div class="paragraph">
+<p>Confirm deletion in the pop-up message box</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_giving_users_lower_levels_of_permission">Giving Users lower levels of permission</h3>
+<div class="paragraph">
+<p><strong>Click on 'User Management/Role Bindings'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Create Binding'</strong></p>
+</div>
+<div class="paragraph">
+<p>Set Name to ‘partneraccess’</p>
+</div>
+<div class="paragraph">
+<p>Make sure that the Namespace is ‘rbactest-{{USER_ID}}’. If it is not, select ‘rbactest-{{USER_ID}}’ from the Project dropdown menu in the top left.</p>
+</div>
+<div class="paragraph">
+<p>Select ‘view’ in the Role Name pull down</p>
+</div>
+<div class="paragraph">
+<p>Ensure the Subject radiobox is set to ‘User’</p>
+</div>
+<div class="paragraph">
+<p>In the Subject Name enter the user name for the partner</p>
+</div>
+<div class="paragraph">
+<p><strong>Click Create</strong></p>
+</div>
+<div class="paragraph">
+<p>Ensure the partner has done the same with your {{USER_ID}}</p>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Home/Projects'</strong></p>
+</div>
+<div class="paragraph">
+<p>Select the partner project (rbactest_(PARTNERUSERNAME) )</p>
+</div>
+<div class="paragraph">
+<p>In the Project overview pane click on Role Bindings</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You now do not have the appropriate access rights to interact with the role bindings as you only have View access to the target project
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Workloads/Deployment Config'</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Click on the rbactest (DC)</strong></p>
+</div>
+<div class="paragraph">
+<p>Try and scale down the Pod to one pod</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+View access allows you to see the state of objects but NOT to change them.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Click on 'Home/Projects'</strong></p>
+</div>
+<div class="paragraph">
+<p>In the triple dot menu next to the rbactest_PARTNERUSERNAME select ‘Delete Project’</p>
+</div>
+<div class="paragraph">
+<p>Type ‘rbactest_(PARTNERUSERNAME)’ in the message box and press ‘Delete’</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Note that you cannot delete the other persons project.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Click Cancel</strong></p>
+</div>
+<div class="paragraph">
+<p>In the triple dot menu next to your own project (rbactest-{{USER_ID}}) select ‘Delete Project’</p>
+</div>
+<div class="paragraph">
+<p>Type ‘rbactest-{{USER_ID}}’ in the message box and press ‘Delete’</p>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2021-04-06 19:08:41 UTC
+</div>
+</div>
+</body>
+</html>

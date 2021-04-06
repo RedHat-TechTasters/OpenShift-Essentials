@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.12">
+<title>Setting up the UI and Terminal</title>
+<link rel="stylesheet" href="./lab-style.css">
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="_setting_up_the_ui_and_terminal">Setting up the UI and Terminal</h3>
+<div class="paragraph">
+<p><strong>The workshop was designed and tested on the Chrome browser and it is advised to avoid issues that this browser be used whenever possible</strong></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+For a number of the labs you will be interacting with the OpenShift cluster using a number of different command line tools. In order to avoid you having to install them on your own machine we have taken advantage of the nature of OpenShift and produced a Container that does it all for you, and provides a terminal experience in the browser. In this section you will create that application; this terminal is used throughout the workshop.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If you leave the Terminal window open for a long time without using it it will disconnect. To reconnect simply refresh the page.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Open the browser and navigate to the console url {{OPENSHIFT_CONSOLE_URL}}[{{OPENSHIFT_CONSOLE_URL}}, window="_blank"]</p>
+</div>
+<div class="paragraph">
+<p>Logon using the user provided by the course administrator ({{USER_ID}})</p>
+</div>
+<div class="paragraph">
+<p>You will see an introduction message similar to the one beneath when you access the Developer view for the first time: Click 'Skip Tour'.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="prereq-0.png" alt="Skip the tour">
+</div>
+</div>
+<div class="paragraph">
+<p>Select the Administrator view by clicking on 'Developer' at the top left and selecting Administrator.
+Navigate to Home/Projects to be presented with a screen listing projects.</p>
+</div>
+<div class="paragraph">
+<p>Hit 'Create Project'</p>
+</div>
+<div class="paragraph">
+<p>For 'Name' enter terminal-{{USER_ID}}</p>
+</div>
+<div class="paragraph">
+<p>'Display Name' and 'Description' are optional labels</p>
+</div>
+<div class="paragraph">
+<p>Once the project has been created (you will be given a dashboard) change the mode of the UI from Administrator to Developer by clicking on the top left of the UI where it says 'Administrator' and selecting 'Developer'</p>
+</div>
+<div class="paragraph">
+<p>On the Topology page it will state 'No resources found' - Click on 'Container Image'</p>
+</div>
+<div class="paragraph">
+<p>In 'Image Name from external registry' enter <code>quay.io/ilawson/devex4</code> and hit return</p>
+</div>
+<div class="paragraph">
+<p>The UI will validate the URL (successfully) - leave everything else as default and scroll down to the bottom of the page. Hit 'Create'</p>
+</div>
+<div class="paragraph">
+<p>Wait for the ring around the application icon to change to dark blue - this indicates the application has been started</p>
+</div>
+<div class="paragraph">
+<p>In the topology page click on the 'Open URL' icon as shown below</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="prereq-1.png" alt="Selecting the Open URL">
+</div>
+</div>
+<div class="paragraph">
+<p>This will open another tab with a command line in it - this is your terminal for the duration of the basic workshop</p>
+</div>
+<div class="paragraph">
+<p>Switch back to the UI and click on the {{USER_ID}} displayed at the top right and select 'Copy Login Command' as shown below</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="prereq-2.png" alt="Selecting Copy Login">
+</div>
+</div>
+<div class="paragraph">
+<p>In the new tab that appears login with username {{USER_ID}} and password 'openshift'</p>
+</div>
+<div class="paragraph">
+<p>Click on 'Display Token'</p>
+</div>
+<div class="paragraph">
+<p>Copy the command given for 'Log in with this token' - this may require using the browser 'copy' command after highlighting the command</p>
+</div>
+<div class="paragraph">
+<p>Close this tab and switch to the terminal tab - if you have closed the terminal tab go back to the UI and select the 'Show URL' from the topology view in the Developer UI</p>
+</div>
+<div class="paragraph">
+<p>Paste and execute the command</p>
+</div>
+<div class="paragraph">
+<p>Press 'y' to use insecure connections</p>
+</div>
+<div class="paragraph">
+<p>The terminal should now be logged on - to check it try</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>oc whoami
+oc version</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The terminal should display your user for the first command and the client and Kubernetes versions for the second command</p>
+</div>
+<div class="paragraph">
+<p>You may now continue with the labs</p>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2021-04-06 19:08:41 UTC
+</div>
+</div>
+</body>
+</html>
