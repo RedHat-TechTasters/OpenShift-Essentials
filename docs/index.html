@@ -9,10 +9,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
 
-    body {
-      position: relative;
-      height: auto;
-      min-height: 100% !important;
+    html, body {
+      margin: 0; 
+      height: 100%; 
+      overflow: hidden;
     }
     
     .navbar {
@@ -41,31 +41,38 @@
     
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: none;
-      height: 100%;
-      /*
-      border-right: 2px;
-      border-right-style: solid;
-      border-bottom: 2px;
-      border-bottom-style: solid;
-      border-color: #ee0100;
-      */
+      background-color: #efefef;
+      
     }
     
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
+    .container-fluid {
+      height: 100%
+    }
+
+
+    .sidenav {
+      height: 100%;
+    }
+    .col-sm-3 {
+      padding-top: 0px;
+      width: 20%;
+    }
+    .col-sm-9 {
+      height: 100%;
+      width: 80%;
     }
 
     /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
+    @media screen and (max-width: 1000px) {
+      .col-sm-3 {
+        height: 22%;
+        width: 100%;
+        overflow: auto;
       }
-      .row.content {height: auto;} 
+      .col-sm-9 {
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
@@ -77,9 +84,7 @@
       color: #ee0100;
     }
 
-    .col-sm-9 {
-      height: 100%;
-    }
+    
 
     .workshop-title {
       padding-top: 15px;
@@ -115,9 +120,6 @@
             <li><a href="#">Contact</a></li>
             <li><a target="_blank" href="https://github.com/redhat-techtasters/openshift-essentials">Repository</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
         </div>
     </div>
 </nav>
@@ -127,17 +129,18 @@
   <div class="row content">
     <div class="col-sm-3 sidenav">
       <div class="workshop-title">
-        <h4><b>> OpenShift Essentials</b></h4>
+        <h4><b>OpenShift Essentials</b></h4>
       </div>
       
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#">Introduction to 'oc'</a></li>
-        <li class="active"><a href="#">Application Basics</a></li>
+        <li id="introduction_to_oc"><a  href="#">Introduction to 'oc'</a></li>
+        <li id="application_basics"><a  href="#">Application Basics</a></li>
       </ul><br>
     </div>
 
     <div class="col-sm-9">
-      <iframe src="applicationbasics.html" title="Application Basics" style="position:fixed; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>
+      <!-- <iframe src="applicationbasics.html" title="Application Basics" style="position:fixed; width:86%; height:100%; border:none; margin:0; padding:0;  z-index:999999;"></iframe> -->
+      <iframe id="lab_frame" src="applicationbasics.html" title="Application Basics" style="width:100%; height:100%; border:none; margin:0; padding:0; z-index:999999;"></iframe>
     </div>
   </div>
 </div>
@@ -145,4 +148,20 @@
 
 
 </body>
+
+<script>
+  var current_lab = "none";
+  function selectLab(lab) {
+    $('#lab_frame').attr("src", lab+".html");
+    $('#'+lab).addClass('active');
+    $('#'+current_lab).removeClass('active');
+    current_lab = lab;
+  }
+  $('#introduction_to_oc').click(function(){ selectLab("introduction_to_oc"); return false; });
+  $('#application_basics').click(function(){ selectLab("application_basics"); return false; });
+
+  selectLab("introduction_to_oc")
+
+</script>
+
 </html>
